@@ -1,12 +1,15 @@
 * {
     box-sizing: border-box;
-    padding: 0; 
+    padding: 0;
 }
 label {
     display: block;
     width: fit-content;
 }
-input,input:focus,select,select:focus {
+input,
+input:focus,
+select,
+select:focus {
     outline: none;
     border: none;
     padding: 0;
@@ -28,7 +31,7 @@ html {
 ::-webkit-scrollbar {
     width: 0;
 }
- 
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -68,15 +71,17 @@ input[type="number"] {
         padding: 1rem;
         min-width: 350px;
         text-wrap: nowrap;
-
         flex-grow: 1;
     }
     .objects {
         display: flex;
-        flex-direction: column; 
+        flex-direction: column;
+        align-items: stretch;
         flex-wrap: nowrap;
+        align-self: stretch;
+        flex-grow: 0.3;
         gap: 1rem;
-        color: white; 
+        color: white;
         min-width: 350px;
         .terminal {
             max-width: 20%;
@@ -85,7 +90,7 @@ input[type="number"] {
         .tdnt {
             display: flex;
             flex-direction: column;
-            flex-wrap: wrap; 
+            flex-wrap: wrap;
             legend {
                 font-weight: bold;
                 font-size: larger;
@@ -94,7 +99,7 @@ input[type="number"] {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                gap: 0.3rem; 
+                gap: 0.3rem;
                 padding: 0.5rem;
                 .opt {
                     flex-grow: 1;
@@ -127,10 +132,11 @@ input[type="number"] {
                     justify-content: center;
                     align-items: center;
                     flex-direction: row;
-                    flex-wrap: nowrap; 
-                    .desc{
+                    flex-wrap: nowrap;
+                    .desc {
                         width: 4cm;
-                        #mat,#tab {
+                        #mat,
+                        #tab {
                             flex-grow: 1;
                             width: fit-content;
                             display: flex;
@@ -139,11 +145,11 @@ input[type="number"] {
                             flex-wrap: nowrap;
                             gap: 0.4rem;
                             flex-direction: column;
-                            .typeSelect{
+                            .typeSelect {
                                 flex-grow: 1;
                             }
                         }
-                    } 
+                    }
                     .name,
                     .typeSelect {
                         font-size: 1.1rem;
@@ -159,6 +165,41 @@ input[type="number"] {
                         cursor: pointer;
                         font-size: xx-large;
                     }
+                }
+            }
+        }
+        .terminal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            flex-grow: 1;
+            background-color: #141414; 
+            legend {
+                font-weight: bold;
+                font-size: larger;
+            }
+            .operations {
+                flex-grow: 1;
+                #run {
+                    display: flex;
+                    align-items: center;
+                    font-family: inherit;
+ 
+                    font-size: 16px;
+                    font-weight: bolder;
+                    padding: 0.7em 1.4em 0.7em 1.1em;
+                    color: white;
+ 
+                    background:rgb(1, 197, 57);
+                    border: none;
+                    box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
+                    letter-spacing: 0.05em;
+                    border-radius: 0.5em 0;
+                    cursor: pointer;
+                    user-select: none;
+ 
                 }
             }
         }
