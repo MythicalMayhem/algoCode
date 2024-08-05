@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href='../public/styles/IDE.css'>
+</head>
+
+<body>
+    <div class="container">
+
+        <aside id="objects" class="objects">
+            <fieldset id="tdnt" class="tdnt">
+                <legend>TDNT</legend>
+                <div class="interact">
+                    <button id="clearTDNT" class="opt">Q</button>
+                    <button id="addTDNT" class="opt">+</button>
+                    <button id="collapseTDNT" class="opt">\/</button>
+                </div>
+                <div class="kids" id="tdntkids">
+
+                </div>
+            </fieldset>
+            <fieldset class="tdo" id="tdo">
+                <legend>TDO</legend>
+                <div class="interact">
+                    <button id="clearTDO" class="opt">Q</button>
+                    <button id="addTDO" class="opt">+</button>
+                    <button id="collapseTDO" class="opt">\/</button>
+                </div>
+                <div class="kids" id="tdokids">
+
+                </div>
+            </fieldset>
+            <fieldset class="terminal">
+                <div class="operations">
+                    <button id="run">Run</button>
+                    <button id="clear">Clear</button>
+                </div>
+            </fieldset>
+        </aside>
+        <textarea class="code" type="text" id="input"></textarea>
+    </div>
+</body>
+<script>
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    const print = console.log
+    const data = {
+        code: '',
+        tdnt: {},
+        tdo: {},
+    }
+    const update = (e) => {
+        const options = [
+            '<optgroup label="primitives">',
+            '<option value="chaine">chaine</option>',
+            '<option value="booleen">booleen</option>',
+            '<option value="entier">entier</option>',
+            '<option value="reel">reel</option>',
+            '<option value="charactere">charactere</option>',
+            '</optgroup><optgroup label="others">'
+        ]
+        $('#tdntkids').children().each((i, elem) => {
+            $(elem).children('.desc').children('.typeSelect').each((i, el) => {
+                $(el).empty()
+                $(el).append(options.join('') + '</optgroup>')
+            })
+            print($(elem), $(elem).children('.name').val())
+            options.push('<option value="' + $(elem).children('.name').val() + '">' + $(elem).children('.name').val() + '</option>')
+        })
+        $('#tdokids').children().each((i,elem)=>{
+            $(elem).children('.typeSelect').empty().append(options.join('') + '</optgroup>')
+        })
+    }
+    $("#input").on('input', function (e) { data.text = $('#input').val() });
+
+    $('#collapseTDNT,#collapseTDO').on('click', function (e) {
+        const id = $(this).closest('fieldset').attr('id')
+        console.log(id)
+        $('#' + id + 'kids').toggle(250)
+    })
+    $('#clearTDNT,#clearTDO').on('click', function (e) {
+        const id = $(this).closest('fieldset').attr('id')
+        $('#' + id + 'kids').hide(150)
+        $('#' + id + 'kids').empty()
+    })
+    $('#addTDO').on('click', function (e) {
+        const id = $(this).closest('fieldset').attr('id')
+        const uid = Date.now()
+        const str = '<div class="kid" id="' + uid + '"> <input type="text" class="name"> <select id="typeSelect2" class="typeSelect">   </select> </div>'
+        $('#tdokids').append(str)
+        $('#' + uid + ' .name').focus()
+        $('#' + uid + ' .name').on('input', update)
+        $('#' + uid + ' #delete').on('click', () => { $('#' + uid + ' .name').off('input'); $('#' + uid + ' #delete').off('click'); $('#' + uid).remove() })
+        update()
+        $('#tdokids').show(150)
+    })
+
+
+
+
+    $('#addTDNT').on('click', function (e) {
+        const id = $(this).closest('fieldset').attr('id')
+        const uid = Date.now()
+        const str = '<div class="kid" id="' + uid + '" > <input type="text" class="name"> <span>=</span> <span class="desc"> <select id="typeSelect0" style="margin-bottom: 0.3rem;" class="typeSelect"> <option value="">--</option> <option value="TAB">tableau</option> <option value="MAT">matrice</option> </select> <span style="display: none;" id="tab" > <label for="">de <input class="intSelect" type="number" min="0"></label> <select id="typeSelect1" class="typeSelect">   </select> </span> <span style="display: none;" id="mat"> <label for=""> <input id="intSelect1" class="intSelect" type="number" min="0">lignes</label> <label for=""> <input id="intSelect2" class="intSelect" type="number" min="0">colonnes</label> <select id="typeSelect2" class="typeSelect">   </select> </span> </span> <span class="delete" id="delete">X</span> </div>'
+        const k = $('#tdntkids').append(str)
+        const until = $('#tdntkids').children().length
+
+        $('#' + uid + ' .name').focus()
+        $('#' + uid + ' .name').on('input', update)
+        $('#' + uid + ' #delete').on('click', () => { $('#' + uid + ' .name').off('input'); $('#' + uid + ' #delete').off('click'); $('#' + uid).hide(2000).remove() })
+        update()
+        $('#tdntkids').show(150)
+        $('#' + uid + ' #typeSelect0').on('change', (e) => {
+            const name = $(e.target).closest('.name').value
+            const parent = $(e.target).closest('.kid')
+            const type = $(e.target).val()
+            if (type === 'TAB') {
+                $($(e.target.parentNode).children('#tab')[0]).fadeIn(500)
+                $($(e.target.parentNode).children('#mat')[0]).hide()
+            } else if (type === 'MAT') {
+                $($(e.target.parentNode).children('#mat')[0]).fadeIn(500)
+                $($(e.target.parentNode).children('#tab')[0]).hide()
+            } else {
+                $($(e.target.parentNode).children('#mat')[0]).fadeOut(100)
+                $($(e.target.parentNode).children('#tab')[0]).fadeOut(100)
+            }
+        })
+
+    })
+    function getTDNT() {
+        const tdnt = {}
+        $('#tdntkids').children().each(function (i, elem) {
+            const name = $(elem).children('.name').val()
+            const mattab = $(elem).children('.desc').children('#typeSelect0').val()
+            if (mattab == 'TAB') {
+                const inps = $(elem).children('.desc').children('#tab').children()
+                const num = $(inps[0]).children().val()
+                const type = $(inps[1]).val()
+                tdnt[name] = { num, type }
+            }
+        })
+        console.log(tdnt)
+    }
+
+
+
+    $('#run').on('click', () => {
+        getTDNT()
+        // fetch('http://127.0.0.1:3000/products', {
+        //     method: 'POST', headers: {
+        //         "Content-Type": "application/json",
+        //         "text": 'tedgsdfgbsdb'
+        //     },
+        //     body: JSON.stringify({ username: "example" })
+        // })
+        //     .then((res) => { return res.json() })
+        //     .then(console.log)
+    })
+
+</script>
+
+
+</html>

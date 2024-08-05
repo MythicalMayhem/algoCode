@@ -1,0 +1,166 @@
+* {
+    box-sizing: border-box;
+    padding: 0; 
+}
+label {
+    display: block;
+    width: fit-content;
+}
+input,input:focus,select,select:focus {
+    outline: none;
+    border: none;
+    padding: 0;
+}
+body,
+html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(20, 32, 87);
+    color: whitesmoke;
+    font-family: sans-serif;
+    letter-spacing: 0.2rem;
+}
+::-webkit-scrollbar {
+    width: 0;
+}
+ 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    min-width: 1cm;
+    appearance: unset;
+    -moz-appearance: textfield;
+}
+* {
+    transition-duration: 0.1s;
+}
+
+.container {
+    height: 90vh;
+    width: 95vw;
+    background-color: rgb(30, 43, 100);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1rem;
+    gap: 2rem;
+    overflow: scroll;
+    .code {
+        height: 100%;
+        background-color: #505050;
+        outline: none;
+        font-size: x-large;
+        color: whitesmoke;
+        resize: none;
+        padding: 1rem;
+        min-width: 350px;
+        text-wrap: nowrap;
+
+        flex-grow: 1;
+    }
+    .objects {
+        display: flex;
+        flex-direction: column; 
+        flex-wrap: nowrap;
+        gap: 1rem;
+        color: white; 
+        min-width: 350px;
+        .terminal {
+            max-width: 20%;
+        }
+        .tdo,
+        .tdnt {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap; 
+            legend {
+                font-weight: bold;
+                font-size: larger;
+            }
+            .interact {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 0.3rem; 
+                padding: 0.5rem;
+                .opt {
+                    flex-grow: 1;
+                    font-size: larger;
+                    cursor: pointer;
+                    background-color: rgb(96, 174, 177);
+                    border: 0.2rem solid whitesmoke;
+                    border-radius: 0.1rem;
+                    &:hover {
+                        background-color: rgb(78, 143, 145);
+                    }
+                }
+            }
+            .kids {
+                display: flex;
+                flex: 2;
+                flex-direction: column;
+                flex-wrap: nowrap;
+                align-items: flex-start;
+                gap: 1rem;
+                background-color: transparent;
+                color: white;
+                padding: 0.444rem;
+                box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 10px;
+                flex-grow: 1;
+                min-width: 300px;
+                .kid {
+                    gap: 5px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: row;
+                    flex-wrap: nowrap; 
+                    .desc{
+                        width: 4cm;
+                        #mat,#tab {
+                            flex-grow: 1;
+                            width: fit-content;
+                            display: flex;
+                            justify-content: center;
+                            align-items: flex-start;
+                            flex-wrap: nowrap;
+                            gap: 0.4rem;
+                            flex-direction: column;
+                            .typeSelect{
+                                flex-grow: 1;
+                            }
+                        }
+                    } 
+                    .name,
+                    .typeSelect {
+                        font-size: 1.1rem;
+                        width: 3cm;
+                    }
+                    .intSelect {
+                        appearance: unset;
+                        width: 10%;
+                        font-size: 1.1rem;
+                    }
+                    .delete {
+                        color: rgb(167, 26, 26);
+                        cursor: pointer;
+                        font-size: xx-large;
+                    }
+                }
+            }
+        }
+    }
+}
