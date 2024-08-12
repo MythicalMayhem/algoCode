@@ -83,9 +83,7 @@ input[type="number"] {
         gap: 1rem;
         color: white;
         min-width: 350px;
-        .terminal {
-            max-width: 20%;
-        }
+        
         .tdo,
         .tdnt {
             display: flex;
@@ -170,38 +168,58 @@ input[type="number"] {
         }
         .terminal {
             display: flex;
-            justify-content: center;
-            align-items: center;
+            justify-content:flex-start;
+            align-items: flex-start;
             flex-direction: column;
             flex-wrap: nowrap;
             flex-grow: 1;
+            padding: 1rem;
             background-color: #141414; 
+            overflow: scroll;
+            min-height: 20vh;
+
+
             legend {
                 font-weight: bold;
                 font-size: larger;
             }
             .operations {
+                display: flex;
+                justify-content: flex-start;
+                align-items: flex-start;
+                flex-direction: row;
+                flex-wrap: nowrap;
                 flex-grow: 1;
-                #run {
+                #run,#clear {
+                    cursor: pointer; 
                     display: flex;
                     align-items: center;
-                    font-family: inherit;
- 
-                    font-size: 16px;
+                    font-family: inherit; 
+                    font-size: 1rem;
                     font-weight: bolder;
                     padding: 0.7em 1.4em 0.7em 1.1em;
-                    color: white;
- 
-                    background:rgb(1, 197, 57);
+                    color: white; 
                     border: none;
+                    background:rgb(1, 197, 57);
                     box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
                     letter-spacing: 0.05em;
                     border-radius: 0.5em 0;
-                    cursor: pointer;
-                    user-select: none;
- 
+                }
+                #clear {
+                    background:rgb(197, 1, 43);
+                    box-shadow: 0 0.7em 1.5em -0.5em #a7251498;
                 }
             }
+            .text {
+            }
         }
+    }
+}
+
+@media screen and (max-width : 900px) {
+ 
+    .objects {
+        width: 100%;
+        flex-grow: 1;
     }
 }
