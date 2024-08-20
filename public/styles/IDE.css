@@ -82,8 +82,7 @@ input[type="number"] {
         flex-grow: 0.3;
         gap: 1rem;
         color: white;
-        min-width: 350px;
-        
+        min-width: 350px; 
         .tdo,
         .tdnt {
             display: flex;
@@ -130,7 +129,7 @@ input[type="number"] {
                     justify-content: center;
                     align-items: center;
                     flex-direction: row;
-                    flex-wrap: nowrap;
+                    flex-wrap: wrap;
                     .desc {
                         width: 4cm;
                         #mat,
@@ -147,6 +146,11 @@ input[type="number"] {
                                 flex-grow: 1;
                             }
                         }
+                    }
+                    .name {
+                        text-align: center;
+                        font-weight: bolder;
+
                     }
                     .name,
                     .typeSelect {
@@ -177,7 +181,7 @@ input[type="number"] {
             background-color: #141414; 
             overflow: scroll;
             min-height: 20vh;
-
+            max-height: 50vh;
 
             legend {
                 font-weight: bold;
@@ -189,6 +193,7 @@ input[type="number"] {
                 align-items: flex-start;
                 flex-direction: row;
                 flex-wrap: nowrap;
+                max-height: 2cm;
                 flex-grow: 1;
                 #run,#clear {
                     cursor: pointer; 
@@ -210,16 +215,19 @@ input[type="number"] {
                     box-shadow: 0 0.7em 1.5em -0.5em #a7251498;
                 }
             }
-            .text {
+            code {
+                font-size: x-large;
+                flex-grow: 1;
+                overflow: scroll;
+                height: 100%;
             }
         }
     }
 }
 
-@media screen and (max-width : 900px) {
+@media   (max-width : 900px) {
  
-    .objects {
+    .objects {  
         width: 100%;
-        flex-grow: 1;
     }
 }
