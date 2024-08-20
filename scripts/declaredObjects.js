@@ -32,4 +32,4 @@ function generateTDO(tdnt, tdo) {
     return lines
 }
 
-module.exports = { generateTDO };
+export { generateTDO };

@@ -10,6 +10,7 @@ input,
 input:focus,
 select,
 select:focus {
+    text-align: center;
     outline: none;
     border: none;
     padding: 0;
@@ -75,6 +76,7 @@ input[type="number"] {
     }
     .objects {
         display: flex;
+        max-width: 35vw;
         flex-direction: column;
         align-items: stretch;
         flex-wrap: nowrap;
@@ -82,7 +84,7 @@ input[type="number"] {
         flex-grow: 0.3;
         gap: 1rem;
         color: white;
-        min-width: 350px; 
+        min-width: 350px;
         .tdo,
         .tdnt {
             display: flex;
@@ -150,7 +152,6 @@ input[type="number"] {
                     .name {
                         text-align: center;
                         font-weight: bolder;
-
                     }
                     .name,
                     .typeSelect {
@@ -172,13 +173,13 @@ input[type="number"] {
         }
         .terminal {
             display: flex;
-            justify-content:flex-start;
+            justify-content: flex-start;
             align-items: flex-start;
             flex-direction: column;
             flex-wrap: nowrap;
             flex-grow: 1;
             padding: 1rem;
-            background-color: #141414; 
+            background-color: #141414;
             overflow: scroll;
             min-height: 20vh;
             max-height: 50vh;
@@ -195,24 +196,34 @@ input[type="number"] {
                 flex-wrap: nowrap;
                 max-height: 2cm;
                 flex-grow: 1;
-                #run,#clear {
-                    cursor: pointer; 
+                width: 100%;
+                #run,
+                #clear,
+                #copy {
+                    cursor: pointer;
                     display: flex;
                     align-items: center;
-                    font-family: inherit; 
+                    font-family: inherit;
                     font-size: 1rem;
                     font-weight: bolder;
                     padding: 0.7em 1.4em 0.7em 1.1em;
-                    color: white; 
+                    color: white;
                     border: none;
-                    background:rgb(1, 197, 57);
+                    background: rgb(1, 197, 57);
                     box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
                     letter-spacing: 0.05em;
                     border-radius: 0.5em 0;
                 }
                 #clear {
-                    background:rgb(197, 1, 43);
+                    background: rgb(197, 1, 43);
                     box-shadow: 0 0.7em 1.5em -0.5em #a7251498;
+                }
+                #copy {
+                    background: transparent;
+                    box-shadow: 0 0.7em 1.5em -0.5em #a7251498;
+                    margin-left: auto;
+                    font-size: 0.6rem;
+                    font-weight: bold;
                 }
             }
             code {
@@ -225,9 +236,8 @@ input[type="number"] {
     }
 }
 
-@media   (max-width : 900px) {
- 
-    .objects {  
+@media (max-width: 900px) {
+    .objects {
         width: 100%;
     }
 }

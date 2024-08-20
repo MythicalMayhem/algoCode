@@ -93,12 +93,13 @@ function replacement(el) {
         .replaceAll(/ div /ig, " // ")
         .replaceAll(/ mod /ig, " % ")
         .replaceAll(/\)div\(/ig, ") // (")
-        .replaceAll(/\)mod\(/ig, ") %  (")
         .replaceAll(/ div\(/ig, " // (")
-        .replaceAll(/ mod\(/ig, " % (")
         .replaceAll(/\)div /ig, ") // ")
+        .replaceAll(/\)mod\(/ig, ") %  (")
+        .replaceAll(/ mod\(/ig, " % (")
         .replaceAll(/\)mod /ig, ") % ")
         .replaceAll(/<--/g, '=')
+        
     return replaceDoubleComparison(L)
 }
 function replaceInString(el) {
@@ -185,7 +186,7 @@ function translateLines(r) {
     return newres
 }
 
-module.exports = { translateLines };
+export  { translateLines };
 
 /*
  ! RESERVED KEYWORDS :  

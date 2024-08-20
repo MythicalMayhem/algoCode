@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href=' styles/IDE.css'>
+    <link rel="stylesheet" href='../styles/IDE.css'>
 </head>
 
 <body>
@@ -38,6 +38,7 @@
                 <div class="operations">
                     <button id="run">Run</button>
                     <button id="clear">Clear</button>
+                    <button id="copy">Copy <br> Raw</button>
                 </div>
                 <code id="innerTerminal">
 
@@ -50,15 +51,18 @@
 <script>
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="scripts/cookies.js" type="module"></script>
+<script src="../scripts/cookies.js" type="module"></script>
 <script type="module">
     import { set, get, del } from '../scripts/cookies.js'
-
+    import { generateTDO } from "../scripts/declaredObjects.js";
+    import { translateLines } from '../scripts/convert.js'
+    import { predefined } from '../scripts/predefined.js'
     const print = console.log
     const data = {
         text: '',
         tdnt: {},
         tdo: {},
+        output: '',
     }
     const update = (e, selectedIndex) => {
         const names = []
@@ -88,8 +92,8 @@
                 $(el).append(options.join('') + '</optgroup>')
                 $(elem).children('.desc').children('#mat').children('#typeSelect2')[0].selectedIndex = selectedIndex || k
             })
-            
-            
+
+
 
             options.push('<option value="' + N + '">' + N + '</option>')
             names.push(N)
@@ -98,11 +102,11 @@
             const k = $(elem).children('.typeSelect')[0].selectedIndex
             $(elem).children('.typeSelect').empty()
             $(elem).children('.typeSelect').append(options.join('') + '</optgroup>')
-            
-            
+
+
             $(elem).children('.typeSelect')[0].selectedIndex = selectedIndex || k
-            
-            
+
+
         })
     }
 
@@ -111,7 +115,7 @@
         getTDO()
         data.text = $('#input').val().split('\n')
         console.log(data);
-        
+
         set('save', JSON.stringify(data))
     }
 
@@ -122,15 +126,15 @@
         const id = $(this).closest('fieldset').attr('id')
         const uid = Date.now()
         const str = `<div class="kid" id="${uid}"> <input type="text" value="${N || ''}" class="name"> <select id="typeSelect2" selectedIndex = "${T || 1}" class="typeSelect">   </select> </div>`
-        $('#tdokids').append(str) 
+        $('#tdokids').append(str)
         $('#' + uid).append('<span class="delete" id="delete">X</span>')
-        $('#' + uid + ' .name').on('change',save)
-        $('#' + uid + ' select').on('change',save)
-        $('#' + uid + ' #delete').on('click', () => { $('#' + uid + ' .name').off('input'); $('#' + uid + ' #delete').off('click'); $('#' + uid).remove() ;save()})
+        $('#' + uid + ' .name').on('change', save)
+        $('#' + uid + ' select').on('change', save)
+        $('#' + uid + ' #delete').on('click', () => { $('#' + uid + ' .name').off('input'); $('#' + uid + ' #delete').off('click'); $('#' + uid).remove(); save() })
         $('#tdokids').show(150)
         update(null, T || 0)
     }
-    
+
     const addtdnt = (e, N, T, O, S, R, C) => {
         const id = $(this).closest('fieldset').attr('id')
         const uid = Date.now()
@@ -159,18 +163,18 @@
         const k = $('#tdntkids').append(str)
 
         $('#' + uid).append('<span class="delete" id="delete">X</span>')
-        $('#' + uid + ' .name').on('input', ()=> {update(e);save()})
-        $('#' + uid + ' #delete').on('click', () => { $('#' + uid + ' .name').off('input'); $('#' + uid + ' #delete').off('click'); $('#' + uid).hide(2000).remove();save() })
-        $('#' + uid + ' .desc ').on('change',save)
-        $('#' + uid + ' .desc #tab label input').on('change',save)
-        $('#' + uid + ' .desc #tab select').on('change',save)
-        
-        $('#' + uid + ' .desc ').on('change',save)   
-        
-        $('#' + uid + ' .desc #mat #lab1 #intSelect1') .on('change',save)
-        $('#' + uid + ' .desc #mat #lab2 #intSelect2') .on('change',save)
-        $('#' + uid + ' .desc #mat select') .on('change',save)
- 
+        $('#' + uid + ' .name').on('input', () => { update(e); save() })
+        $('#' + uid + ' #delete').on('click', () => { $('#' + uid + ' .name').off('input'); $('#' + uid + ' #delete').off('click'); $('#' + uid).hide(2000).remove(); save() })
+        $('#' + uid + ' .desc ').on('change', save)
+        $('#' + uid + ' .desc #tab label input').on('change', save)
+        $('#' + uid + ' .desc #tab select').on('change', save)
+
+        $('#' + uid + ' .desc ').on('change', save)
+
+        $('#' + uid + ' .desc #mat #lab1 #intSelect1').on('change', save)
+        $('#' + uid + ' .desc #mat #lab2 #intSelect2').on('change', save)
+        $('#' + uid + ' .desc #mat select').on('change', save)
+
         $('#tdntkids').show(150)
         $('#' + uid + ' #typeSelect0').on('change', (e) => {
             const type = $(e.target).val()
@@ -207,7 +211,7 @@
                 const cols = parseInt($(elem).children('.desc').children('#mat').children('label').eq(1).children('input').val())
                 data.tdnt[name] = { form: 'MAT', lines, cols, content: mattype, selectedIndex: t }
             }
-            
+
         })
     }
 
@@ -218,18 +222,18 @@
             const type = $(el).children('.typeSelect').val()
             const t = $(el).children('.typeSelect')[0].selectedIndex
 
-            
+
 
             data.tdo[name] = { form: 'VAR', content: type, selectedIndex: t }
         })
     }
     $(window).on('load', (e) => {
         const d = JSON.parse(get('save'))
-        
+
         for (const [key, value] of Object.entries(d.tdnt)) {
             const type = value.form
-            if (type == 'TAB') { addtdnt('', key,'TAB', value.selectedIndex, value.size, 0, 0) }
-            else if (type == 'MAT') { addtdnt('', key,'MAT', value.selectedIndex, 0, value.lines, value.cols) }
+            if (type == 'TAB') { addtdnt('', key, 'TAB', value.selectedIndex, value.size, 0, 0) }
+            else if (type == 'MAT') { addtdnt('', key, 'MAT', value.selectedIndex, 0, value.lines, value.cols) }
         }
         for (const [key, value] of Object.entries(d.tdo)) {
 
@@ -238,7 +242,7 @@
         $("#input").val(d.text.join('\n'))
     });
     $("#input").on('input', save);
-        
+
     $('#collapseTDNT,#collapseTDO').on('click', function (e) {
         const id = $(this).closest('fieldset').attr('id')
         $('#' + id + 'kids').toggle(250)
@@ -251,6 +255,11 @@
     $('#addTDNT').on('click', addtdnt)
     $('#addTDO').on('click', addtdo)
     $('#clear').on('click', () => { $('#innerTerminal').empty() })
+    $('#copy').on('click', () => {
+        navigator.clipboard.writeText(data.output);
+        alert("Copied raw javascript ");
+    })
+
     $('#run').on('click', () => {
         getTDNT()
         getTDO()
@@ -259,28 +268,27 @@
         let node = document.createElement('div')
         node.innerText = '=============='
         parent.appendChild(node)
-        fetch('http://127.0.0.1:3000/products', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-            .then((res) => { return res.json(); })
-            .then((data) => {
-                console.log(data);
-                try {
-                    eval(data.content);
-                } catch (error) {
-                    let parent = document.getElementById('innerTerminal')
-                    let node = document.createElement('div')
-                    node.innerText = error
-                    parent.appendChild(node)
-                    console.log(error);
-                }
+        const res = ''
+        try {
+            const a = generateTDO(data.tdnt, data.tdo)
+            const b = translateLines(data.text)
+            data.output = predefined + '\n' + a + b.join(';')
+            try {
+                eval(data.output);
+            } catch (error) {
+                let parent = document.getElementById('innerTerminal')
+                let node = document.createElement('div')
+                node.innerText = error
+                parent.appendChild(node)
+                console.log(error);
+            }
+        } catch (error) {
+            data.output = 'ecrire("syntax error:  ' + error + '  )'
+            console.log(error);
+            
+        }
 
-            })
+
     })
 
 </script>

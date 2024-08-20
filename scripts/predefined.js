@@ -1,5 +1,4 @@
-module.exports = {
-    str: `
+const predefined = `
 function __writeinterminal(s) {
     let parent = document.getElementById('innerTerminal')
     let node = document.createElement('div')
@@ -50,5 +49,6 @@ const Vrai = true
 const Faux = false
 const vrai =  true
 const faux =  false`
-}
+
+export { predefined }
 //__writeinterminal(L.join(' ') + '\n')
