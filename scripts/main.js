@@ -188,8 +188,12 @@ $(window).on('load', (e) => {
 });
 $("#input").on('input', save);
 
+let k = 0
 $('#collapseTDNT,#collapseTDO').on('click', function (e) {
     const id = $(this).closest('fieldset').attr('id')
+    k = (k + 180)%360 
+ 
+
     $('#' + id + 'kids').toggle(250)
 })
 $('#clearTDNT,#clearTDO').on('click', function (e) {
@@ -212,7 +216,7 @@ $('#run').on('click', () => {
     let parent = document.getElementById('innerTerminal')
     let node = document.createElement('div')
     node.innerText = '=============='
-    parent.appendChild(node) 
+    parent.appendChild(node)
     try {
         const a = generateTDO(data.tdnt, data.tdo)
         const b = translateLines(data.text)
@@ -229,7 +233,7 @@ $('#run').on('click', () => {
     } catch (error) {
         data.output = 'ecrire("syntax error:  ' + error + '  )'
         console.log(error);
-        
+
     }
 
 

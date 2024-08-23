@@ -1,3 +1,7 @@
+:root {
+    --htmlbgc: rgb(20, 32, 87);
+}
+
 * {
     box-sizing: border-box;
     padding: 0;
@@ -24,7 +28,7 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(20, 32, 87);
+    background-color: var(--htmlbgc);
     color: whitesmoke;
     font-family: sans-serif;
     letter-spacing: 0.2rem;
@@ -33,6 +37,13 @@ html {
     width: 0;
 }
 
+body {
+    background-color: transparent !important;
+    backdrop-filter: blur(23px);
+}
+html {
+    background-image: url("../assets/bg.jpg");
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -50,9 +61,11 @@ input[type="number"] {
 }
 
 .container {
+    border-radius: 10px;
     height: 90vh;
     width: 95vw;
-    background-color: rgb(30, 43, 100);
+    background-color: rgba(30, 43, 100, 0.384);
+    backdrop-filter: blur(10px);
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     display: flex;
     flex-direction: row;
@@ -63,10 +76,13 @@ input[type="number"] {
     gap: 2rem;
     overflow: scroll;
     .code {
+        font-weight: bold;
+        border-radius: 7px;
         height: 100%;
         background-color: #505050;
         outline: none;
         font-size: x-large;
+        font-family: monospace, sans-serif;
         color: whitesmoke;
         resize: none;
         padding: 1rem;
@@ -87,6 +103,7 @@ input[type="number"] {
         min-width: 350px;
         .tdo,
         .tdnt {
+            border-radius: 7px;
             display: flex;
             flex-direction: column;
             flex-wrap: wrap;
@@ -109,6 +126,10 @@ input[type="number"] {
                     border-radius: 0.1rem;
                     &:hover {
                         background-color: rgb(78, 143, 145);
+                    }
+                    .icon {
+                        height: 20px;
+                        margin-top: 5px;
                     }
                 }
             }
@@ -228,6 +249,7 @@ input[type="number"] {
             }
             code {
                 font-size: x-large;
+
                 flex-grow: 1;
                 overflow: scroll;
                 height: 100%;
