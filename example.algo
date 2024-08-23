@@ -1,0 +1,15 @@
+repeter 
+ lire(x)
+jusqua x < 5
+
+pour i de 0 a x faire
+ lire(T[i])
+finpour
+
+pour i de 0 a x faire 
+ si T[i] mod 2 = 0 alors
+  ecrire(T[i] + ' pair' )
+ sinon 
+  ecrire(T[i] + ' impair ' )
+ finsi
+finpour 

@@ -127,10 +127,7 @@ input[type="number"] {
                     &:hover {
                         background-color: rgb(78, 143, 145);
                     }
-                    .icon {
-                        height: 20px;
-                        margin-top: 5px;
-                    }
+
                 }
             }
             .kids {
@@ -262,4 +259,8 @@ input[type="number"] {
     .objects {
         width: 100%;
     }
+}
+.icon {
+    height: 20px;
+    margin-top: 5px;
 }

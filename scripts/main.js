@@ -59,9 +59,7 @@ const save = () => {
     getTDNT()
     getTDO()
     data.text = $('#input').val().split('\n')
-    console.log(data);
-
-    set('save', JSON.stringify(data))
+    localStorage.setItem('data', JSON.stringify(data))
 }
 
 
@@ -72,7 +70,7 @@ const addtdo = (e, N, T) => {
     const uid = Date.now()
     const str = `<div class="kid" id="${uid}"> <input type="text" value="${N || ''}" class="name"> <select id="typeSelect2" selectedIndex = "${T || 1}" class="typeSelect">   </select> </div>`
     $('#tdokids').append(str)
-    $('#' + uid).append('<span class="delete" id="delete">X</span>')
+    $('#' + uid).append('<span class="delete" id="delete"><img src="../assets/clear.svg" alr="X" class="icon"></span>')
     $('#' + uid + ' .name').on('change', save)
     $('#' + uid + ' select').on('change', save)
     $('#' + uid + ' #delete').on('click', () => { $('#' + uid + ' .name').off('input'); $('#' + uid + ' #delete').off('click'); $('#' + uid).remove(); save() })
@@ -107,7 +105,7 @@ const addtdnt = (e, N, T, O, S, R, C) => {
         `
     const k = $('#tdntkids').append(str)
 
-    $('#' + uid).append('<span class="delete" id="delete">X</span>')
+    $('#' + uid).append('<span class="delete" id="delete"><img src="../assets/clear.svg" alr="X" class="icon"></span>')
     $('#' + uid + ' .name').on('input', () => { update(e); save() })
     $('#' + uid + ' #delete').on('click', () => { $('#' + uid + ' .name').off('input'); $('#' + uid + ' #delete').off('click'); $('#' + uid).hide(2000).remove(); save() })
     $('#' + uid + ' .desc ').on('change', save)
@@ -173,7 +171,7 @@ function getTDO() {
     })
 }
 $(window).on('load', (e) => {
-    const d = JSON.parse(get('save'))
+    const d = JSON.parse(localStorage.getItem('data'))
 
     for (const [key, value] of Object.entries(d.tdnt)) {
         const type = value.form
@@ -188,21 +186,43 @@ $(window).on('load', (e) => {
 });
 $("#input").on('input', save);
 
-let k = 0
+const colpses = {
+    'tdo': 180,
+    'tdnt': 180
+}
+
 $('#collapseTDNT,#collapseTDO').on('click', function (e) {
     const id = $(this).closest('fieldset').attr('id')
-    k = (k + 180)%360 
- 
-
+    colpses[id] = (colpses[id] + 180) % 360
+    const el = $('#' + id).children('.interact').children('.expand').children('.icon')
+    el.css({ 'transform': `rotate(${colpses[id]}deg)` })
     $('#' + id + 'kids').toggle(250)
 })
 $('#clearTDNT,#clearTDO').on('click', function (e) {
     const id = $(this).closest('fieldset').attr('id')
+    console.log(id);
+
+    colpses[id] = 0
+    const el = $('#' + id).children('.interact').children('.expand').children('.icon')
+    el.css({ 'transform': `rotate(${colpses[id]}deg)` })
     $('#' + id + 'kids').hide(150)
     $('#' + id + 'kids').empty()
 })
-$('#addTDNT').on('click', addtdnt)
-$('#addTDO').on('click', addtdo)
+$('#addTDNT').on('click', (e) => {
+    const id = 'tdnt'
+    colpses[id] = 0
+    const el = $('#' + id).children('.interact').children('.expand').children('.icon')
+    el.css({ 'transform': `rotate(${colpses[id]}deg)` })
+    addtdnt(e)
+})
+$('#addTDO').on('click', (e) => {
+    const id = 'tdo'
+    colpses[id] = 0
+    const el = $('#' + id).children('.interact').children('.expand').children('.icon')
+    el.css({ 'transform': `rotate(${colpses[id]}deg)` })
+    addtdo(e)
+})
+
 $('#clear').on('click', () => { $('#innerTerminal').empty() })
 $('#copy').on('click', () => {
     navigator.clipboard.writeText(data.output);
